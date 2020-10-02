@@ -3,7 +3,7 @@ const messageRouter = express.Router();
 const { check, validationResult } = require("express-validator/check");
 const config = require("config");
 const User = require("../../models/User");
-const Message = require("../../models/message");
+const Message = require("../../models/Message");
 const _ = require("lodash");
 
 // @route POST api/message
