@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { AlertsContainer } from "../../App";
+import { AlertText, AlertsContainer } from "../../styles";
 
 const Alert = ({ alerts }) => {
   return (
@@ -11,9 +11,9 @@ const Alert = ({ alerts }) => {
           {" "}
           {alerts.map((alert, index) => {
             return (
-              <div key={index} className={`alert alert-${alert.alertType}`}>
+              <AlertText key={index} alertType={alert.alertType}>
                 {alert.msg}
-              </div>
+              </AlertText>
             );
           })}
         </AlertsContainer>

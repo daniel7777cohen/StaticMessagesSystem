@@ -1,31 +1,42 @@
 import React from "react";
-import moment from "moment";
-import { Card, CardsContainer } from "./styles";
-const MessagesDisplay = ({ messages, type }) => {
+import { Card, CardsContainer, Button, Li, P } from "../../styles";
+import { deleteMessage } from "../../actions/message";
+import { connect } from "react-redux";
+
+const MessagesDisplay = ({ messages, type, deleteMessage }) => {
+  const handleDelete = async (messageId) => {
+    await deleteMessage(messageId);
+  };
   return (
     <CardsContainer>
       {messages.map((message, index) => {
-        const dateString = moment
-          .unix(message.createdAt)
-          .format("MM/DD/YYYY hh:mm A");
-
         return (
-          <Card key={index}
+          <Card
+            key={index}
             title={`User Id : ${
               type === "received"
                 ? `${message.senderId}`
                 : `${message.receiverId}`
             }  `}
+            headStyle={{ borderBottom: "1px solid #c7c7c7" }}
           >
             <>
               {" "}
               <div>
-                <li >
-                  {<p>{message.subject}</p>}
+                <Li>
+                  {<P>{message.subject}</P>}
                   <ul>{message.message}</ul>
-                  <ul>{dateString}</ul>
-                </li>
+                  <ul>{new Date(message.createdAt).toLocaleString()}</ul>
+                </Li>
               </div>
+              <Button
+                onClick={() => {
+                  handleDelete(message._id);
+                }}
+                isDangerButton
+              >
+                Delete
+              </Button>
             </>
           </Card>
         );
@@ -34,4 +45,4 @@ const MessagesDisplay = ({ messages, type }) => {
   );
 };
 
-export default MessagesDisplay;
+export default connect(null, { deleteMessage })(MessagesDisplay);

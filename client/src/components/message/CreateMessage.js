@@ -8,36 +8,37 @@ import {
   Description,
   FormText,
   FormGroup,
-  Select,
   TextArea,
   Input,
   Button,
   Link,
-} from "./styles";
+} from "../../styles";
+import Spinner from "../layout/Spinner";
+import { addNewMessage } from "../../actions/message";
 
-const CreateMessage = ({ setAlert, removeAlerts }) => {
+const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
   useEffect(() => {
     return () => {
       removeAlerts();
     };
   }, [removeAlerts]);
   const [formData, setFormData] = useState({
-    senderId: "0",
-    recieverId: "0",
+    senderId: "",
+    receiverId: "",
     subject: "",
     message: "",
   });
 
-  const { senderId, recieverId, subject, message } = formData;
+  const { senderId, receiverId, subject, message } = formData;
 
   const runValidations = () => {
     if (senderId === "0") {
       setAlert("please select a sender id", "danger");
       return false;
     }
-    if (recieverId === "0") {
+    if (receiverId === "0") {
       setAlert("please select a receiver id", "danger");
-    } else if (recieverId === senderId) {
+    } else if (receiverId === senderId) {
       setAlert("you cant send a message to yourself !!!", "danger");
       return false;
     }
@@ -49,73 +50,87 @@ const CreateMessage = ({ setAlert, removeAlerts }) => {
       setAlert("message field cannot be blank", "danger");
       return false;
     }
-    window.scrollTo(0, 0);
     return true;
   };
 
   const onSubmit = async (e) => {
+    e.preventDefault();
     removeAlerts();
     const isValid = runValidations();
-    e.preventDefault();
+    window.scrollTo(0, 0);
+    if (isValid) await addNewMessage(formData);
+
   };
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   return (
-    <Container>
-      {" "}
-      <PrimaryText>Create A Message</PrimaryText>
-      <Description>
-        Let's get some information to create a new message ...
-      </Description>
-      <form>
-        <FormGroup>
-          <Select
-            name="senderId"
-            value={senderId}
-            onChange={(e) => onChange(e)}
-          >
-            <option value="0">Select Sender Id</option>
-            <option value="first id">first id</option>
-            <option value="second id">second id</option>
-          </Select>
-          <Select
-            name="recieverId"
-            value={recieverId}
-            onChange={(e) => onChange(e)}
-          >
-            <option value="0">Select Reciever Id</option>
-            <option value="first id">first id</option>
-            <option value="second id">second id</option>
-          </Select>
-        </FormGroup>
-        <FormText>Subject</FormText>
-        <FormGroup>
-          <Input
-            type="text"
-            placeholder="write the subject here ..."
-            name="subject"
-            value={subject}
-            onChange={(e) => onChange(e)}
-          />
-        </FormGroup>
-        <FormText>Message</FormText>
-        <FormGroup>
-          <TextArea
-            placeholder="Enter your message here ... Smilies are fun to read :)"
-            name="message"
-            value={message}
-            onChange={(e) => onChange(e)}
-          ></TextArea>
-        </FormGroup>
-
-        <Button type="submit" onClick={(e) => onSubmit(e)}>
-          Submit
-        </Button>
-        <Link to="/view-messages">Go Back</Link>
-      </form>
-    </Container>
+    <>
+      {!loading ? (
+        <Container>
+          {" "}
+          <PrimaryText>Create A Message</PrimaryText>
+          <Description>
+            Let's get some information to create a new message ...
+          </Description>
+          <form>
+            <FormText>Sender Id</FormText>{" "}
+            <FormGroup>
+              <Input
+                type="text"
+                placeholder="write the sender id here ..."
+                name="senderId"
+                value={senderId}
+                onChange={(e) => onChange(e)}
+              />
+            </FormGroup>
+            <FormText>Receiver Id</FormText>
+            <FormGroup>
+              <Input
+                type="text"
+                placeholder="write the receiver id here ..."
+                name="receiverId"
+                value={receiverId}
+                onChange={(e) => onChange(e)}
+              />
+            </FormGroup>{" "}
+            <FormText>Subject</FormText>
+            <FormGroup>
+              <Input
+                type="text"
+                placeholder="write the subject here ..."
+                name="subject"
+                value={subject}
+                onChange={(e) => onChange(e)}
+              />
+            </FormGroup>
+            <FormText>Message</FormText>
+            <FormGroup>
+              <TextArea
+                placeholder="Enter your message here ... Smilies are fun to read :)"
+                name="message"
+                value={message}
+                onChange={(e) => onChange(e)}
+              ></TextArea>
+            </FormGroup>
+            <Button type="submit" onClick={(e) => onSubmit(e)}>
+              Submit
+            </Button>
+            <Link to="/view-messages">View Messages</Link>
+          </form>
+        </Container>
+      ) : (
+        <Spinner />
+      )}
+    </>
   );
 };
+const mapStateToProps = (state) => ({
+  loading: state.users.loading,
+});
 
-export default connect(null, { setAlert, removeAlerts })(CreateMessage);
+export default connect(mapStateToProps, {
+  setAlert,
+  removeAlerts,
+  addNewMessage,
+})(CreateMessage);

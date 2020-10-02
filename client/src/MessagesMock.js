@@ -1,14 +1,15 @@
 export const messagesMock = [
   {
+    id: "0",
     senderId: 1,
     receiverId: 2,
     subject: "Polkastarter",
     message: `Hi, what do you think about polkastarter? Hi, what do you think about polkastarter? Hi, what do you think about polkastarter? Hi, what do you think about polkastarter? Hi, what do you think about polkastarter?
       Hi, what do you think about polkastarter? Hi, what do you think about polkastarter? Hi, what do you think about polkastarter? Hi, what do you think about polkastarter? Hi, what do you think about polkastarter?`,
-
     createdAt: 1601574034,
   },
   {
+    id: "01",
     senderId: 1,
     receiverId: 3,
     subject: "Polkadot",
@@ -16,6 +17,7 @@ export const messagesMock = [
     createdAt: 1601574034,
   },
   {
+    id: "10",
     senderId: 1,
     receiverId: 3,
     subject: "Ethereum",
@@ -23,6 +25,7 @@ export const messagesMock = [
     createdAt: 1601574034,
   },
   {
+    id: "11",
     senderId: 1,
     receiverId: 3,
     subject: "Bitcoin",
@@ -30,6 +33,7 @@ export const messagesMock = [
     createdAt: 1601574034,
   },
   {
+    id: "100",
     senderId: 2,
     receiverId: 1,
     subject: "Polkastarter",
