@@ -39,7 +39,7 @@ const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
     {
       label: "Sender Id",
       field: "senderId",
-      placeholder: "write the sender id here ... :)",
+      placeholder: "write the sender id here ...",
       name: "senderId",
     },
     {
