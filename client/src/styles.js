@@ -50,13 +50,12 @@ export const FormDesc = styled.h3`
     align-self: center;
   }
 `;
-
 export const PrimaryText = styled.h1`
   font-size: 3rem;
   line-height: 1.2;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  color: #17a2b8;
+  color: #1890ff;
   align-self: center;
   @media (max-width: 480px) {
     font-size: 2rem;
@@ -66,7 +65,7 @@ export const PrimaryText = styled.h1`
   }
 `;
 
-export const Description = styled.p`
+export const Description = styled.div`
   font-size: 1.5rem;
   margin-bottom: 1rem;
 `;
@@ -83,7 +82,7 @@ export const Button = styled.button`
   transition: opacity 0.2s ease-in;
   outline: none;
   margin: 0.5rem 0;
-  background-color: #17a2b8;
+  background-color: #1890ff;
 `;
 
 export const Link = styled(Link_)`
@@ -133,7 +132,7 @@ export const TotalMessages = styled.span`
 
 export const Smiley = styled(SmileOutlined)`
   &&& {
-    color: #17a2b8;
+    color: #1890ff;
   }
 `;
 
@@ -153,8 +152,8 @@ export const AlertText = styled.div`
 export const AlertsContainer = styled.div``;
 
 export const LandingBackgroundImg = styled.img`
-height:100vh;
-width:100%;
+  height: 100vh;
+  width: 100%;
 `;
 
 export const Li = styled.li`
@@ -170,13 +169,12 @@ export const Li = styled.li`
 `;
 
 export const P = styled.p`
-
-@media (max-width: 480px) {
-  align-items: center;
-}
-@media (max-width: 768px) {
-  align-items: center;
-}
+  @media (max-width: 480px) {
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    align-items: center;
+  }
   font-size: x-large;
 `;
 
@@ -213,7 +211,7 @@ export const Nav = styled.nav`
     padding: 0.45rem;
     margin: 0 0.25rem;
     &:hover {
-      color: #17a2b8;
+      color: #1890ff;
     }
   }
 
@@ -239,3 +237,11 @@ export const FormCentered = styled.form`
   display: flex;
   flex-direction: column;
 `;
+
+export const TextHelper = styled.div`
+  font-size: medium;
+  font-weight: 200;
+  font-style: oblique;
+  margin-top:0.5rem;
+`;
+

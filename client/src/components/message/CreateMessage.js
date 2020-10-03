@@ -12,6 +12,7 @@ import {
   Input,
   Button,
   Link,
+  TextHelper,
 } from "../../styles";
 import Spinner from "../layout/Spinner";
 import { addNewMessage } from "../../actions/message";
@@ -33,14 +34,16 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
   const { senderId, receiverId, subject, message } = formData;
 
   const runValidations = () => {
-    if (senderId === "0") {
-      setAlert("please select a sender id", "danger");
+    if (!senderId) {
+      setAlert("Sender Id field cannot be blank. Use the users icon at the top to pick one.", "danger");
       return false;
     }
-    if (receiverId === "0") {
-      setAlert("please select a receiver id", "danger");
-    } else if (receiverId === senderId) {
-      setAlert("you cant send a message to yourself !!!", "danger");
+    if (!receiverId) {
+      setAlert("Receiver Id field cannot be blank. Use the users icon at the top to pick one.", "danger");
+      return false;
+    }
+    if (receiverId === senderId) {
+      setAlert("You cant send a message to yourself !!!", "danger");
       return false;
     }
     if (subject === "") {
@@ -72,6 +75,7 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
           <PrimaryText>Create A Message</PrimaryText>
           <Description>
             Let's get some information to create a new message ...
+            <TextHelper>Use the users icon and pick a valid sender id.</TextHelper>
           </Description>
           <form>
             <FormDesc>Sender Id</FormDesc>{" "}
@@ -116,9 +120,7 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
             <Button type="submit" onClick={(e) => onSubmit(e)}>
               Submit
             </Button>
-            <Link
-              to={{ pathname: "/view-messages", state: { id: senderId } }}
-            >
+            <Link to={{ pathname: "/view-messages", state: { id: senderId } }}>
               View Messages
             </Link>
           </form>
