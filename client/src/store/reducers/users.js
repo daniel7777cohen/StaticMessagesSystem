@@ -1,9 +1,8 @@
-import { SET_USERS } from "../actions/constants";
+import { SET_USERS } from "../constants";
 
 const initialState = {
   usersList: [],
   loading: true,
-  error: {},
 };
 
 export default function (state = initialState, action) {
@@ -14,7 +13,6 @@ export default function (state = initialState, action) {
         ...state,
         usersList: payload,
         loading: false,
-        error: {},
       };
 
     default:

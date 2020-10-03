@@ -1,8 +1,8 @@
 import React from 'react';
-import { LandingBackgroundImg } from "../../styles";
-import LandingBackground from "../../image/LandingBackground.jpg";
+import { LandingBackgroundImg } from "../../styled-components/styles";
+import LandingBackground from "../../assets/LandingBackground.jpg";
 const Landing = () => (
-    <LandingBackgroundImg src={LandingBackground} alt="Impossible"  />
+    <LandingBackgroundImg src={LandingBackground} alt="__no__photo__"  />
 );
 
 export default Landing;

@@ -1,3 +1,4 @@
+//Static Users For Development Only !
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({

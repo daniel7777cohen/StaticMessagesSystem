@@ -1,9 +1,8 @@
 const express = require("express");
 const userRouter = express.Router();
 const User = require("../../models/User");
-const config = require("config");
 
-//@route get api/users
+//@route GET api/users
 // fetch all users
 userRouter.get("/", async (req, res) => {
   try {

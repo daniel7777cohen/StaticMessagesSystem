@@ -1,4 +1,4 @@
-import { SET_USERS } from "./constants";
+import { SET_USERS } from "../constants";
 import axios from "axios";
 
 export const getUsers = () => async (dispatch) => {

@@ -6,11 +6,11 @@ import {
   FormDesc,
   FormGroup,
   FormCentered,
-} from "../../styles";
+} from "../styled-components/styles";
 import { connect } from "react-redux";
-import MessagesTabs from "./MessagesTab";
-import { getMessages } from "../../actions/message";
-import Spinner from "../layout/Spinner";
+import MessagesTabs from "../components/message/MessagesTab";
+import { getMessages } from "../store/actions/message";
+import Spinner from "../components/layout/Spinner";
 import { withRouter, useLocation } from "react-router-dom";
 
 const MessagesManager = ({ getMessages, message: { messages, loading } }) => {

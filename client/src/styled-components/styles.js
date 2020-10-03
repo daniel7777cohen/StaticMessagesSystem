@@ -26,15 +26,6 @@ export const TextArea = styled.textarea`
   border: 1px solid #ccc;
 `;
 
-export const Select = styled.select`
-  display: block;
-  width: 100%;
-  padding: 0.4rem;
-  font-size: 1.2rem;
-  border: 1px solid #ccc;
-  margin-bottom: 1rem;
-`;
-
 export const FormGroup = styled.div`
   margin: 1.2rem 0;
 `;
@@ -191,6 +182,7 @@ export const AppContainer = styled.section`
 export const NavUl = styled.ul`
   display: flex;
   list-style: none;
+  margin-top: 0.5rem;
 `;
 
 export const Nav = styled.nav`
@@ -238,10 +230,9 @@ export const FormCentered = styled.form`
   flex-direction: column;
 `;
 
-export const TextHelper = styled.div`
+export const GuideText = styled.div`
   font-size: medium;
-  font-weight: 200;
+  font-weight: 400;
   font-style: oblique;
-  margin-top:0.5rem;
+  margin-top: 0.5rem;
 `;
-

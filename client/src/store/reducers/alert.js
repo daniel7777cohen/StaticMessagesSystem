@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERTS } from "../actions/constants";
+import { SET_ALERT, REMOVE_ALERTS } from "../constants";
 
 const initialState = [];
 export default function (state = initialState, action) {

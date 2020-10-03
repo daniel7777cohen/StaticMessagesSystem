@@ -1,7 +1,4 @@
-import {
-  GET_MESSAGES,
-  DELETE_MESSAGE,
-} from "./constants";
+import { GET_MESSAGES, DELETE_MESSAGE } from "../constants";
 import axios from "axios";
 import { setAlert } from "./alert";
 
@@ -12,11 +9,7 @@ export const addNewMessage = (messageInfo) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
-    const res = await axios.post(
-      "/api/message",
-      messageInfo,
-      config
-    );
+    const res = await axios.post("/api/message", messageInfo, config);
 
     if (res.status === 200) dispatch(setAlert(res.data.msg, "success"));
   } catch (error) {
@@ -49,14 +42,23 @@ export const getMessages = () => async (dispatch) => {
 
 export const deleteMessage = (messageId) => async (dispatch) => {
   try {
-    const res = await axios.delete(
-      `/api/message/${messageId}`
-    );
+    const res = await axios.delete(`/api/message/${messageId}`);
+
+    debugger;
+    if (res.status === 200) dispatch(setAlert(res.data.msg, "success"));
+
     if (res.status === 200) {
       dispatch({
         type: DELETE_MESSAGE,
         payload: messageId,
       });
     }
-  } catch (error) {}
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach((e) => {
+        dispatch(setAlert(e.msg, "danger"));
+      });
+    }
+  }
 };

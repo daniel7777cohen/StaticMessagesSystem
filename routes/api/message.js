@@ -1,20 +1,34 @@
 const express = require("express");
 const messageRouter = express.Router();
 const { check, validationResult } = require("express-validator/check");
-const config = require("config");
 const User = require("../../models/User");
 const Message = require("../../models/Message");
 const _ = require("lodash");
 
+
+
+// @route GET api/message
+// get all messages
+messageRouter.get("/", async (req, res) => {
+  try {
+    const messages = await Message.find();
+    res.status(200).json(messages);
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ errors: [{ msg: error.message }] });
+  }
+});
+
+
+
 // @route POST api/message
 // create message
-
 messageRouter.post(
   "/",
   [
     [
-      check("senderId", "senderId is required").not().isEmpty(),
-      check("receiverId", "receiverId is required").not().isEmpty(),
+      check("senderId", "sender id is required").not().isEmpty(),
+      check("receiverId", "receiver id is required").not().isEmpty(),
       check("subject", "subject is required").not().isEmpty(),
       check("message", "message is required").not().isEmpty(),
     ],
@@ -67,25 +81,13 @@ messageRouter.post(
   }
 );
 
-// @route GET api/message
-// get all messages
 
-messageRouter.get("/", async (req, res) => {
-  try {
-    const messages = await Message.find();
-    res.status(200).json(messages);
-  } catch (error) {
-    console.error(error.message);
-    res.status(400).json({ errors: [{ msg: error.message }] });
-  }
-});
-
-// @route delete api/profile/:messageId
+// @route DELETE api/message/:messageId/
 // delete message by message id
 
-messageRouter.delete("/:userId", async (req, res) => {
+messageRouter.delete("/:messageId", async (req, res) => {
   try {
-    await Message.deleteOne({ _id: req.params.userId });
+    await Message.deleteOne({ _id: req.params.messageId });
     res.status(200).json({ msg: `Message was deleted successfully` });
   } catch (error) {
     console.error(error.message);

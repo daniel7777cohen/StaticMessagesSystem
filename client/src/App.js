@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/layout/Navbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CreateMessage from "./components/message/CreateMessage";
-import MessagesManager from "./components/message/MessagesManager";
+import CreateMessage from "./containers/CreateMessage";
+import MessagesManager from "./containers/MessagesManager";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store/store";
 import Alert from "./components/layout/Alert";
 import "antd/dist/antd.css";
-import { AppContainer } from "./styles";
-import { getUsers } from "./actions/users";
+import { AppContainer } from "./styled-components/styles";
+import { getUsers } from "./store/actions/users";
 import Landing from "./components/layout/Landing";
 
 

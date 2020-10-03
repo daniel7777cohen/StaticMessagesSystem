@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { AlertText, AlertsContainer } from "../../styles";
+import { AlertText, AlertsContainer } from "../../styled-components/styles";
 
 const Alert = ({ alerts }) => {
   return (

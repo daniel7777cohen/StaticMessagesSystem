@@ -1,4 +1,4 @@
-import { SET_ALERT ,REMOVE_ALERTS} from "./constants";
+import { SET_ALERT ,REMOVE_ALERTS} from "../constants";
 
 
 export const setAlert = (msg, alertType) => (dispatch) => {

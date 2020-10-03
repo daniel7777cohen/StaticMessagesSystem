@@ -7,33 +7,36 @@ import {
   faCopy,
 } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
-import { NavSpan, Nav, NavUl } from "../../styles";
+import { NavSpan, Nav, NavUl } from "../../styled-components/styles";
 import { Modal, Space } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-
 const Navbar = ({ users: { usersList } }) => {
+  
   const UsersContent = usersList.map((user) => (
-        <ul key={user._id}>
-          <li>name : {user.name}</li>
-          <CopyToClipboard text={user._id}>
-          <li>
-            id : {user._id}{" "}
-            <FontAwesomeIcon
-              icon={faCopy}
-              style={{ marginLeft: "0.2rem" }}
-              size={"2x"}
-            />
-          </li>
-          </CopyToClipboard>
-        </ul>
+    <ul key={user._id}>
+      <li>name : {user.name}</li>
+      <CopyToClipboard text={user._id}>
+        <li
+          onClick={() =>
+            window.alert(`${user.name}'s id was coppied to clipboard`)
+          }
+        >
+          id : {user._id}{" "}
+          <FontAwesomeIcon
+            icon={faCopy}
+            style={{ marginLeft: "0.2rem" }}
+            size={"1x"}
+          />
+        </li>
+      </CopyToClipboard>
+    </ul>
   ));
 
   const Info = () => {
     Modal.info({
       title: "Static Users - For Development Only",
       content: UsersContent,
-      onOk() {},
     });
   };
   const Links = (
