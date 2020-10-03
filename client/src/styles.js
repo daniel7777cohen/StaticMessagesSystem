@@ -2,23 +2,27 @@ import styled from "styled-components";
 import { Link as Link_ } from "react-router-dom";
 import { Card as Card_ } from "antd";
 import { SmileOutlined } from "@ant-design/icons";
-import LandingBackground from "./image/LandingBackground.jpg";
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 export const Input = styled.input`
   display: block;
   width: 100%;
   padding: 0.4rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 300;
   border: 1px solid #ccc;
+  border-radius: ${({ isDisplayPage }) => (isDisplayPage ? "25px" : "0")};
 `;
 
 export const TextArea = styled.textarea`
   display: block;
   width: 100%;
   padding: 0.4rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-weight: 300;
   border: 1px solid #ccc;
 `;
 
@@ -35,18 +39,25 @@ export const FormGroup = styled.div`
   margin: 1.2rem 0;
 `;
 
-export const FormText = styled.h3`
+export const FormDesc = styled.h3`
   display: block;
   margin-top: 2rem;
   color: #888;
+  @media (max-width: 480px) {
+    align-self: center;
+  }
+  @media (max-width: 768px) {
+    align-self: center;
+  }
 `;
 
 export const PrimaryText = styled.h1`
   font-size: 3rem;
   line-height: 1.2;
+  margin-top: 1rem;
   margin-bottom: 1rem;
   color: #17a2b8;
-
+  align-self: center;
   @media (max-width: 480px) {
     font-size: 2rem;
   }
@@ -72,7 +83,7 @@ export const Button = styled.button`
   transition: opacity 0.2s ease-in;
   outline: none;
   margin: 0.5rem 0;
-  background: ${({ isDangerButton }) => (isDangerButton ? "red" : " #17a2b8")};
+  background-color: #17a2b8;
 `;
 
 export const Link = styled(Link_)`
@@ -97,7 +108,18 @@ export const Card = styled(Card_)`
   margin-bottom: 1rem;
   background-color: #f1f1f1;
   border-radius: 25px;
-  font-family: cursive;
+  font-family: "Raleway", sans-serif;
+
+  @media (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const CardsContainer = styled.div`
@@ -130,20 +152,31 @@ export const AlertText = styled.div`
 
 export const AlertsContainer = styled.div``;
 
-export const LandingBackgroundImg = styled.section`
-  position: relative;
-  background: url(${LandingBackground}) no-repeat center center/cover;
-  height: 100vh;
+export const LandingBackgroundImg = styled.img`
+height:100vh;
+width:100%;
 `;
 
 export const Li = styled.li`
   display: flex;
   flex-direction: column;
   font-size: large;
+  @media (max-width: 480px) {
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 `;
 
 export const P = styled.p`
-  align-self: center;
+
+@media (max-width: 480px) {
+  align-items: center;
+}
+@media (max-width: 768px) {
+  align-items: center;
+}
   font-size: x-large;
 `;
 
@@ -152,12 +185,10 @@ export const NavSpan = styled.span`
 `;
 
 export const AppContainer = styled.section`
-  max-width: 1100px;
   padding: 0 2rem;
   margin-bottom: 0.1rem;
   margin-top: 5rem;
 `;
-
 
 export const NavUl = styled.ul`
   display: flex;
@@ -173,10 +204,10 @@ export const Nav = styled.nav`
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
+  border-bottom: solid 1px;
   opacity: 0.9;
-  background-color:black;
-  
+  background-color: black;
+
   a {
     color: #fff;
     padding: 0.45rem;
@@ -189,4 +220,22 @@ export const Nav = styled.nav`
   h1 {
     margin-bottom: 1rem;
   }
+`;
+
+export const CardBody = styled.div`
+  @media (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+export const FormCentered = styled.form`
+  display: flex;
+  flex-direction: column;
 `;

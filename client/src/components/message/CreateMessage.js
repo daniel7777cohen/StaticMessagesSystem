@@ -6,7 +6,7 @@ import {
   Container,
   PrimaryText,
   Description,
-  FormText,
+  FormDesc,
   FormGroup,
   TextArea,
   Input,
@@ -18,6 +18,7 @@ import { addNewMessage } from "../../actions/message";
 
 const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
   useEffect(() => {
+    window.scrollTo(0, 0);
     return () => {
       removeAlerts();
     };
@@ -59,7 +60,6 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
     const isValid = runValidations();
     window.scrollTo(0, 0);
     if (isValid) await addNewMessage(formData);
-
   };
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -74,7 +74,7 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
             Let's get some information to create a new message ...
           </Description>
           <form>
-            <FormText>Sender Id</FormText>{" "}
+            <FormDesc>Sender Id</FormDesc>{" "}
             <FormGroup>
               <Input
                 type="text"
@@ -84,7 +84,7 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
                 onChange={(e) => onChange(e)}
               />
             </FormGroup>
-            <FormText>Receiver Id</FormText>
+            <FormDesc>Receiver Id</FormDesc>
             <FormGroup>
               <Input
                 type="text"
@@ -94,7 +94,7 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
                 onChange={(e) => onChange(e)}
               />
             </FormGroup>{" "}
-            <FormText>Subject</FormText>
+            <FormDesc>Subject</FormDesc>
             <FormGroup>
               <Input
                 type="text"
@@ -104,7 +104,7 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
                 onChange={(e) => onChange(e)}
               />
             </FormGroup>
-            <FormText>Message</FormText>
+            <FormDesc>Message</FormDesc>
             <FormGroup>
               <TextArea
                 placeholder="Enter your message here ... Smilies are fun to read :)"
@@ -116,7 +116,11 @@ const CreateMessage = ({ setAlert, removeAlerts, loading, addNewMessage }) => {
             <Button type="submit" onClick={(e) => onSubmit(e)}>
               Submit
             </Button>
-            <Link to="/view-messages">View Messages</Link>
+            <Link
+              to={{ pathname: "/view-messages", state: { id: senderId } }}
+            >
+              View Messages
+            </Link>
           </form>
         </Container>
       ) : (

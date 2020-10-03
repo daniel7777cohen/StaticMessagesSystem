@@ -8,10 +8,10 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Alert from "./components/layout/Alert";
 import "antd/dist/antd.css";
-import { LandingBackgroundImg, AppContainer } from "./styles";
+import { AppContainer } from "./styles";
 import { getUsers } from "./actions/users";
+import Landing from "./components/layout/Landing";
 
-const Landing = () => <LandingBackgroundImg />;
 
 const App = () => {
   useEffect(() => {

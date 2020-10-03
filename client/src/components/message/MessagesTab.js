@@ -19,31 +19,34 @@ const MessagesTabs = ({ messages, userId }) => {
   return (
     <>
       {userId ? (
-        <Tabs defaultActiveKey="sent" onChange={callback}>
-          <TabPane
-            tab={<TotalMessages>Sent : {sent.length}</TotalMessages>}
-            key="sent"
-          >
-            {sent.length > 0 ? (
-              <MessagesDisplay messages={sent} type={"sent"}></MessagesDisplay>
-            ) : (
-              <div>No Messages </div>
-            )}
-          </TabPane>
-          <TabPane
-            tab={<TotalMessages>Received : {received.length}</TotalMessages>}
-            key="received"
-          >
-            {received.length > 0 ? (
-              <MessagesDisplay
-                messages={received}
-                type={"received"}
-              ></MessagesDisplay>
-            ) : (
-              <div>No Messages </div>
-            )}
-          </TabPane>
-        </Tabs>
+          <Tabs style={{justifyContent:"center"}} defaultActiveKey="sent" onChange={callback}>
+            <TabPane
+              tab={<TotalMessages>Sent : {sent.length}</TotalMessages>}
+              key="sent"
+            >
+              {sent.length > 0 ? (
+                <MessagesDisplay
+                  messages={sent}
+                  type={"sent"}
+                ></MessagesDisplay>
+              ) : (
+                <div>There are no sent messages </div>
+              )}
+            </TabPane>
+            <TabPane
+              tab={<TotalMessages>Received : {received.length}</TotalMessages>}
+              key="received"
+            >
+              {received.length > 0 ? (
+                <MessagesDisplay
+                  messages={received}
+                  type={"received"}
+                ></MessagesDisplay>
+              ) : (
+                <div>There are no received Messages </div>
+              )}
+            </TabPane>
+          </Tabs>
       ) : (
         <Result
           icon={<Smiley />}
@@ -54,4 +57,4 @@ const MessagesTabs = ({ messages, userId }) => {
   );
 };
 
-export default MessagesTabs; 
+export default MessagesTabs;

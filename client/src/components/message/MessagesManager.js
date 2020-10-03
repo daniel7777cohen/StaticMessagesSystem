@@ -3,33 +3,33 @@ import {
   PrimaryText,
   Container,
   Input,
-  FormText,
+  FormDesc,
   FormGroup,
+  FormCentered,
 } from "../../styles";
 import { connect } from "react-redux";
 import MessagesTabs from "./MessagesTab";
 import { getMessages } from "../../actions/message";
 import Spinner from "../layout/Spinner";
+import { withRouter, useLocation } from "react-router-dom";
 
-const MessagesManager = ({
-  removeAlerts,
-  getMessages,
-  message: { messages, loading },
-}) => {
+const MessagesManager = ({ getMessages, message: { messages, loading } }) => {
+  const { state } = useLocation();
   useEffect(() => {
     getMessages();
   }, [getMessages]);
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(state ? state.id : "");
 
   return (
     <>
       {!loading ? (
         <Container>
           <PrimaryText>Messages Manager</PrimaryText>
-          <form>
-            <FormText>User Id</FormText>
+          <FormCentered>
+            <FormDesc>User Id</FormDesc>
             <FormGroup>
               <Input
+                isDisplayPage
                 type="text"
                 placeholder="write your id here ..."
                 name="userId"
@@ -37,7 +37,7 @@ const MessagesManager = ({
                 onChange={(e) => setUserId(e.target.value)}
               />
             </FormGroup>
-          </form>
+          </FormCentered>
           <MessagesTabs messages={messages} userId={userId} />
         </Container>
       ) : (
@@ -53,4 +53,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getMessages,
-})(MessagesManager);
+})(withRouter(MessagesManager));
