@@ -61,11 +61,16 @@ const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
     removeAlerts();
     const isClienValidation = runClientValidations(formData);
     window.scrollTo(0, 0);
-    if (isClienValidation) await addNewMessage(formData);
+    if (isClienValidation) {
+      await addNewMessage(formData);
+      setFormData({ senderId: "", receiverId: "", subject: "", message: "" });
+    }
   };
+
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   return (
     <>
       {!loading ? (
@@ -74,24 +79,26 @@ const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
           <PrimaryText>Create A Message</PrimaryText>
           <Description>
             Let's get some information to create a new message ...
-            <GuideText>
-              * Use the users icon and pick a valid id.
-            </GuideText>
+            <GuideText>* Use the users icon and pick a valid id.</GuideText>
           </Description>
           <form>
-            {messageTextFormFields.map((FormField) => (
-              <>
-                <FormDesc>{FormField.label}</FormDesc>
-                <FormGroup>
-                  <Input
-                    type={FormField.type}
-                    name={FormField.name}
-                    onChange={(e) => onChange(e)}
-                    placeholder={FormField.placeholder}
-                  />
-                </FormGroup>
-              </>
-            ))}
+            {messageTextFormFields.map((formField) => {
+              const { type, name, placeholder, field, label } = formField;
+              return (
+                <>
+                  <FormDesc>{label}</FormDesc>
+                  <FormGroup>
+                    <Input
+                      type={type}
+                      name={name}
+                      onChange={(e) => onChange(e)}
+                      placeholder={placeholder}
+                      value={formData[field]}
+                    />
+                  </FormGroup>
+                </>
+              );
+            })}
             <FormDesc>Message</FormDesc>
             <FormGroup>
               <TextArea
