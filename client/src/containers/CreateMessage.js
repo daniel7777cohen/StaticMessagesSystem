@@ -15,10 +15,16 @@ import {
   GuideText,
 } from "../styled-components/styles";
 import Spinner from "../components/layout/Spinner";
-import { addNewMessage } from "../store/actions/message";
+import { addNewMessage, setRecentSender } from "../store/actions/message";
 import { runClientValidations } from "./helper";
 
-const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
+const CreateMessage = ({
+  removeAlerts,
+  loading,
+  addNewMessage,
+  setRecentSender,
+  recentSenderId,
+}) => {
   useEffect(() => {
     window.scrollTo(0, 0);
     return () => {
@@ -63,6 +69,7 @@ const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
     window.scrollTo(0, 0);
     if (isClienValidation) {
       await addNewMessage(formData);
+      setRecentSender(senderId);
       setFormData({ senderId: "", receiverId: "", subject: "", message: "" });
     }
   };
@@ -111,7 +118,9 @@ const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
             <Button type="submit" onClick={(e) => onSubmit(e)}>
               Submit
             </Button>
-            <Link to={{ pathname: "/view-messages", state: { id: senderId } }}>
+            <Link
+              to={{ pathname: "/view-messages", state: { id: recentSenderId } }}
+            >
               View Messages
             </Link>
           </form>
@@ -124,9 +133,11 @@ const CreateMessage = ({ removeAlerts, loading, addNewMessage }) => {
 };
 const mapStateToProps = (state) => ({
   loading: state.users.loading,
+  recentSenderId: state.message.recentSenderId,
 });
 
 export default connect(mapStateToProps, {
   removeAlerts,
   addNewMessage,
+  setRecentSender,
 })(CreateMessage);

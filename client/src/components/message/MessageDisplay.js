@@ -29,6 +29,7 @@ const MessagesDisplay = ({
   }, [removeAlerts]);
 
   const handleDelete = async (messageId) => {
+    removeAlerts();
     if (window.confirm("Are you sure you want to delete this message?")) {
       await deleteMessage(messageId);
       window.scrollTo(0, 0);

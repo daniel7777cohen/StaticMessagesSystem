@@ -1,4 +1,4 @@
-import { GET_MESSAGES, DELETE_MESSAGE } from "../constants";
+import { GET_MESSAGES, DELETE_MESSAGE, SET_RECENET_SENDER } from "../constants";
 import axios from "axios";
 import { setAlert } from "./alert";
 
@@ -44,7 +44,6 @@ export const deleteMessage = (messageId) => async (dispatch) => {
   try {
     const res = await axios.delete(`/api/message/${messageId}`);
 
-    debugger;
     if (res.status === 200) dispatch(setAlert(res.data.msg, "success"));
 
     if (res.status === 200) {
@@ -61,4 +60,11 @@ export const deleteMessage = (messageId) => async (dispatch) => {
       });
     }
   }
+};
+
+export const setRecentSender = (senderId) => (dispatch) => {
+  dispatch({
+    type: SET_RECENET_SENDER,
+    payload: senderId,
+  });
 };
