@@ -12,6 +12,7 @@ export const addNewMessage = (messageInfo) => async (dispatch) => {
     const res = await axios.post("/api/message", messageInfo, config);
 
     if (res.status === 200) dispatch(setAlert(res.data.msg, "success"));
+    return true;
   } catch (error) {
     const errors = error.response.data.errors;
     if (errors) {
@@ -20,6 +21,7 @@ export const addNewMessage = (messageInfo) => async (dispatch) => {
       });
     }
   }
+  return false;
 };
 
 export const getMessages = () => async (dispatch) => {

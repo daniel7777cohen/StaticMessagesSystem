@@ -68,9 +68,11 @@ const CreateMessage = ({
     const isClienValidation = runClientValidations(formData);
     window.scrollTo(0, 0);
     if (isClienValidation) {
-      await addNewMessage(formData);
-      setRecentSender(senderId);
-      setFormData({ senderId: "", receiverId: "", subject: "", message: "" });
+      const isAddSuccess = await addNewMessage(formData);
+      if (isAddSuccess) {
+        setRecentSender(senderId);
+        setFormData({ senderId: "", receiverId: "", subject: "", message: "" });
+      }
     }
   };
 
@@ -118,11 +120,16 @@ const CreateMessage = ({
             <Button type="submit" onClick={(e) => onSubmit(e)}>
               Submit
             </Button>
-            <Link
-              to={{ pathname: "/view-messages", state: { id: recentSenderId } }}
-            >
-              View Messages
-            </Link>
+            {recentSenderId && (
+              <Link
+                to={{
+                  pathname: "/view-messages",
+                  state: { id: recentSenderId },
+                }}
+              >
+                View Your Messages
+              </Link>
+            )}
           </form>
         </Container>
       ) : (
