@@ -45,7 +45,7 @@ export const FormDesc = styled.h3`
     align-self: center;
   }
   @media (max-width: 768px) {
-    align-self: center;    
+    align-self: center;
   }
 `;
 export const PrimaryText = styled.h1`
@@ -63,9 +63,16 @@ export const PrimaryText = styled.h1`
   }
 `;
 
-export const Description = styled.div`
+export const SecondaryText = styled.div`
   font-size: 1.5rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
+  }
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 export const Button = styled.button`

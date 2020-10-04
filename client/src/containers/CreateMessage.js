@@ -5,7 +5,7 @@ import { removeAlerts } from "../store/actions/alert";
 import {
   Container,
   PrimaryText,
-  Description,
+  SecondaryText,
   FormDesc,
   FormGroup,
   TextArea,
@@ -86,10 +86,10 @@ const CreateMessage = ({
         <Container>
           {" "}
           <PrimaryText>Create A Message</PrimaryText>
-          <Description>
+          <SecondaryText>
             Let's get some information to create a new message ...
             <GuideText>* Use the users icon and pick a valid id.</GuideText>
-          </Description>
+          </SecondaryText>
           <form>
             {messageTextFormFields.map((formField) => {
               const { type, name, placeholder, field, label } = formField;
