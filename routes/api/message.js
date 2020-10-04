@@ -73,7 +73,7 @@ messageRouter.post(
       if (error.kind === "ObjectId") {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Sender id or Receiver id are invalid" }] });
+          .json({ errors: [{ msg: `Id ${error.value} is invalid` }] });
       }
       console.error(error.message);
       return res.status(500).json({ errors: [{ msg: error.message }] });
