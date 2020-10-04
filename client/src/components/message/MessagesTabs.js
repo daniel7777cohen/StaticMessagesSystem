@@ -54,7 +54,7 @@ const MessagesTabs = ({ messages, userId }) => {
       ) : (
         <Result
           icon={<Smiley />}
-          title={"Please Fill in a valid user id to view your mesages"}
+          title={"Please fill in a valid user id to view your mesages"}
         />
       )}
     </>

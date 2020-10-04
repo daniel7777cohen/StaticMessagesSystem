@@ -56,10 +56,10 @@ export const PrimaryText = styled.h1`
   color: #1890ff;
   align-self: center;
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   @media (max-width: 768px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 `;
 

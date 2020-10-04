@@ -8,7 +8,7 @@ import {
   FormCentered,
 } from "../styled-components/styles";
 import { connect } from "react-redux";
-import MessagesTabs from "../components/message/MessagesTab";
+import MessagesTabs from "../components/message/MessagesTabs";
 import { getMessages } from "../store/actions/message";
 import Spinner from "../components/layout/Spinner";
 import { withRouter, useLocation } from "react-router-dom";
