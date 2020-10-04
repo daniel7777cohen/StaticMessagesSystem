@@ -15,6 +15,13 @@ export const Input = styled.input`
   font-weight: 300;
   border: 1px solid #ccc;
   border-radius: ${({ isDisplayPage }) => (isDisplayPage ? "25px" : "0")};
+
+  @media (max-width: 480px) {
+    text-align: ${({ isDisplayPage }) => (isDisplayPage ? "center" : "left")};
+  }
+  @media (max-width: 768px) {
+    text-align: ${({ isDisplayPage }) => (isDisplayPage ? "center" : "left")};
+  }
 `;
 
 export const TextArea = styled.textarea`
@@ -38,7 +45,7 @@ export const FormDesc = styled.h3`
     align-self: center;
   }
   @media (max-width: 768px) {
-    align-self: center;
+    align-self: center;    
   }
 `;
 export const PrimaryText = styled.h1`

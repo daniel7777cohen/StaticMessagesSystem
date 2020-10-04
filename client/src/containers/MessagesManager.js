@@ -26,7 +26,7 @@ const MessagesManager = ({ getMessages, message: { messages, loading } }) => {
         <Container>
           <PrimaryText>Messages Manager</PrimaryText>
           <FormCentered>
-            <FormDesc>User Id</FormDesc>
+            <FormDesc isDisplayPage>User Id</FormDesc>
             <FormGroup>
               <Input
                 isDisplayPage
