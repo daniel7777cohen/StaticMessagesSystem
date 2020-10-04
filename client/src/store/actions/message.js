@@ -1,4 +1,4 @@
-import { GET_MESSAGES, DELETE_MESSAGE, SET_RECENET_SENDER } from "../constants";
+import { GET_MESSAGES, DELETE_MESSAGE, SET_RECENET_SENDER,DELETE_RECENT_SENDER } from "../constants";
 import axios from "axios";
 import { setAlert } from "./alert";
 
@@ -68,5 +68,11 @@ export const setRecentSender = (senderId) => (dispatch) => {
   dispatch({
     type: SET_RECENET_SENDER,
     payload: senderId,
+  });
+};
+
+export const deleteRecentSender = () => (dispatch) => {
+  dispatch({
+    type: DELETE_RECENT_SENDER,
   });
 };

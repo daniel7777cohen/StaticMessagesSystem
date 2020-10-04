@@ -9,15 +9,20 @@ import {
 } from "../styled-components/styles";
 import { connect } from "react-redux";
 import MessagesTabs from "../components/message/MessagesTabs";
-import { getMessages } from "../store/actions/message";
+import { getMessages, deleteRecentSender } from "../store/actions/message";
 import Spinner from "../components/layout/Spinner";
 import { withRouter, useLocation } from "react-router-dom";
 
-const MessagesManager = ({ getMessages, message: { messages, loading } }) => {
+const MessagesManager = ({
+  getMessages,
+  deleteRecentSender,
+  message: { messages, loading },
+}) => {
   const { state } = useLocation();
   useEffect(() => {
     getMessages();
-  }, [getMessages]);
+    deleteRecentSender();
+  }, [getMessages, deleteRecentSender]);
   const [userId, setUserId] = useState(state ? state.id : "");
 
   return (
@@ -53,4 +58,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getMessages,
+  deleteRecentSender,
 })(withRouter(MessagesManager));

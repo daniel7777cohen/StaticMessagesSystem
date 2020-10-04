@@ -1,4 +1,9 @@
-import { GET_MESSAGES, DELETE_MESSAGE, SET_RECENET_SENDER } from "../constants";
+import {
+  GET_MESSAGES,
+  DELETE_MESSAGE,
+  SET_RECENET_SENDER,
+  DELETE_RECENT_SENDER,
+} from "../constants";
 
 const initialState = {
   messages: [],
@@ -25,6 +30,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         recentSenderId: payload,
+      };
+    case DELETE_RECENT_SENDER:
+      return {
+        ...state,
+        recentSenderId: "",
       };
     default:
       return state;
