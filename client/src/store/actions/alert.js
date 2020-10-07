@@ -1,5 +1,4 @@
-import { SET_ALERT ,REMOVE_ALERTS} from "../constants";
-
+import { SET_ALERT, REMOVE_ALERTS } from "../constants";
 
 export const setAlert = (msg, alertType) => (dispatch) => {
   dispatch({
@@ -10,9 +9,9 @@ export const setAlert = (msg, alertType) => (dispatch) => {
     },
   });
 
-}; 
+  setTimeout(() => dispatch({ type: REMOVE_ALERTS }), 5000);
+};
 
 export const removeAlerts = () => (dispatch) => {
-      dispatch({ type: REMOVE_ALERTS });
-  }; 
-  
+  dispatch({ type: REMOVE_ALERTS });
+};

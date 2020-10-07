@@ -239,7 +239,7 @@ export const CardBody = styled.div`
   }
 `;
 
-export const FormCentered = styled.form`
+export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
 `;

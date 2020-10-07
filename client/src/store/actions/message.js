@@ -1,4 +1,11 @@
-import { GET_MESSAGES, DELETE_MESSAGE, SET_RECENET_SENDER,DELETE_RECENT_SENDER } from "../constants";
+import {
+  GET_MESSAGES,
+  DELETE_MESSAGE,
+  SET_RECENET_SENDER,
+  DELETE_RECENT_SENDER,
+  GET_MESSAGES_BY_USER_ID,
+  MESSAGE_ERROR
+} from "../constants";
 import axios from "axios";
 import { setAlert } from "./alert";
 
@@ -42,7 +49,32 @@ export const getMessages = () => async (dispatch) => {
   }
 };
 
-export const deleteMessage = (messageId) => async (dispatch) => {
+export const getMessagesByUserId = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/message/${userId}`);
+    if (res.status === 200) {
+      dispatch({
+        type: GET_MESSAGES_BY_USER_ID,
+        payload: res.data,
+      });
+      const { received, sent } = res.data;
+      if (received.length > 0 || sent.length > 0)
+        dispatch(setAlert("Messages were loaded successfully", "success"));
+    }
+  } catch (error) {
+    dispatch({
+      type:MESSAGE_ERROR,
+    })
+    const { errors } = error.response.data;
+    if (errors) {
+      errors.forEach((e) => {
+        dispatch(setAlert(e.msg, "danger"));
+      });
+    }
+  }
+};
+
+export const deleteMessage = (messageId, type) => async (dispatch) => {
   try {
     const res = await axios.delete(`/api/message/${messageId}`);
 
@@ -51,7 +83,7 @@ export const deleteMessage = (messageId) => async (dispatch) => {
     if (res.status === 200) {
       dispatch({
         type: DELETE_MESSAGE,
-        payload: messageId,
+        payload: { messageId, type },
       });
     }
   } catch (error) {

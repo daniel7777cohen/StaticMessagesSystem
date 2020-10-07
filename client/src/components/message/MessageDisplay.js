@@ -24,14 +24,14 @@ const MessagesDisplay = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     return () => {
-      removeAlerts();
+      // removeAlerts();
     };
-  }, [removeAlerts]);
+  }, []);
 
   const handleDelete = async (messageId) => {
-    removeAlerts();
+    // removeAlerts();
     if (window.confirm("Are you sure you want to delete this message?")) {
-      await deleteMessage(messageId);
+      await deleteMessage(messageId, type);
       window.scrollTo(0, 0);
     }
   };

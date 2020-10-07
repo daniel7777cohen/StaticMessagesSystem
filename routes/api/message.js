@@ -5,8 +5,6 @@ const User = require("../../models/User");
 const Message = require("../../models/Message");
 const _ = require("lodash");
 
-
-
 // @route GET api/message
 // get all messages
 messageRouter.get("/", async (req, res) => {
@@ -14,12 +12,36 @@ messageRouter.get("/", async (req, res) => {
     const messages = await Message.find();
     res.status(200).json(messages);
   } catch (error) {
-    console.error(error.message);
     res.status(400).json({ errors: [{ msg: error.message }] });
   }
 });
 
+// @route GET api/message/:userId
+// get messages by user id
+messageRouter.get("/:userId", async (req, res) => {
+  try {
+    //validation with middleware, then validate that the user on the request is the same user with requests for data.
 
+    const { userId } = req.params;
+    const userAsReceiverMessages = await Message.find({
+      receiverId: userId,
+    }).sort({ createdAt: -1 });
+    const userAsSenderMessages = await Message.find({ senderId: userId }).sort({
+      createdAt: -1,
+    });
+
+    res
+      .status(200)
+      .json({ received: userAsReceiverMessages, sent: userAsSenderMessages });
+  } catch (error) {
+    if (error.kind === "ObjectId") {
+      return res
+        .status(400)
+        .json({ errors: [{ msg: `Id ${error.value} is invalid` }] });
+    }
+    res.status(400).json({ errors: [{ msg: "server error" }] });
+  }
+});
 
 // @route POST api/message
 // create message
@@ -69,18 +91,15 @@ messageRouter.post(
         .status(200)
         .json({ msg: "Message Was Saved and Posted Successfully" });
     } catch (error) {
-      console.error(error.message);
       if (error.kind === "ObjectId") {
         return res
           .status(400)
           .json({ errors: [{ msg: `Id ${error.value} is invalid` }] });
       }
-      console.error(error.message);
       return res.status(500).json({ errors: [{ msg: error.message }] });
     }
   }
 );
-
 
 // @route DELETE api/message/:messageId/
 // delete message by message id

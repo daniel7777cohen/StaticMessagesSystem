@@ -28,9 +28,9 @@ const CreateMessage = ({
   useEffect(() => {
     window.scrollTo(0, 0);
     return () => {
-      removeAlerts();
+      // removeAlerts();
     };
-  }, [removeAlerts]);
+  }, []);
 
   const [formData, setFormData] = useState({
     senderId: "",
@@ -64,7 +64,7 @@ const CreateMessage = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    removeAlerts();
+    // removeAlerts();
     const isClienValidation = runClientValidations(formData);
     window.scrollTo(0, 0);
     if (isClienValidation) {
