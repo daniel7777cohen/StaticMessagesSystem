@@ -4,6 +4,7 @@ const { check, validationResult } = require("express-validator/check");
 const User = require("../../models/User");
 const Message = require("../../models/Message");
 const _ = require("lodash");
+const auth = require("../middleware/auth");
 
 // @route GET api/message
 // get all messages
@@ -18,21 +19,29 @@ messageRouter.get("/", async (req, res) => {
 
 // @route GET api/message/:userId
 // get messages by user id
-messageRouter.get("/:userId", async (req, res) => {
+// @access private
+messageRouter.get("/:userId", auth, async (req, res) => {
   try {
-    //validation with middleware, then validate that the user on the request is the same user with requests for data.
-
     const { userId } = req.params;
-    const userAsReceiverMessages = await Message.find({
-      receiverId: userId,
-    }).sort({ createdAt: -1 });
-    const userAsSenderMessages = await Message.find({ senderId: userId }).sort({
-      createdAt: -1,
-    });
 
-    res
-      .status(200)
-      .json({ received: userAsReceiverMessages, sent: userAsSenderMessages });
+    if (req.user.id !== userId) {
+      return res.status(400).json({
+        errors: [
+          {
+            msg:
+              "Failed - your own user id doesnt match to the input you've given",
+          },
+        ],
+      });
+    }
+    const received = await Message.find({
+      receiverId: userId,
+    }).sort({ createdAt: -1 }).populate('senderId','name');;
+    const sent = await Message.find({ senderId: userId }).sort({
+      createdAt: -1,
+    }).populate('receiverId','name');
+
+    res.status(200).json({ received, sent });
   } catch (error) {
     if (error.kind === "ObjectId") {
       return res
@@ -45,9 +54,11 @@ messageRouter.get("/:userId", async (req, res) => {
 
 // @route POST api/message
 // create message
+//@access private
 messageRouter.post(
   "/",
   [
+    auth,
     [
       check("senderId", "sender id is required").not().isEmpty(),
       check("receiverId", "receiver id is required").not().isEmpty(),
@@ -56,11 +67,6 @@ messageRouter.post(
     ],
   ],
   async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(500).json({ errors: errors.array() });
-    }
-
     const messageFields = _.pick(req.body, [
       "senderId",
       "receiverId",
@@ -68,8 +74,20 @@ messageRouter.post(
       "message",
     ]);
 
+    if (req.user.id !== messageFields.senderId) {
+      return res.status(400).json({
+        errors: [
+          { msg: "Failed - your own user id doesnt match to the input" },
+        ],
+      });
+    }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(500).json({ errors: errors.array() });
+    }
+
     try {
-      //validate senderId and receiverId
+      //validate senderId
       const sender = await User.findOne({ _id: messageFields.senderId });
       if (!sender) {
         return res
@@ -77,6 +95,7 @@ messageRouter.post(
           .json({ errors: [{ msg: "Sender does not exists" }] });
       }
 
+      //validate receiverId
       const receiver = await User.findOne({ _id: messageFields.receiverId });
       if (!receiver) {
         return res
@@ -84,12 +103,11 @@ messageRouter.post(
           .json({ errors: [{ msg: "Receiver does not exists" }] });
       }
 
-      // create
       const newMessage = new Message(messageFields);
       await newMessage.save();
       return res
         .status(200)
-        .json({ msg: "Message Was Saved and Posted Successfully" });
+        .json({ msg: "Message was saved and posted successfully" });
     } catch (error) {
       if (error.kind === "ObjectId") {
         return res
@@ -103,8 +121,8 @@ messageRouter.post(
 
 // @route DELETE api/message/:messageId/
 // delete message by message id
-
-messageRouter.delete("/:messageId", async (req, res) => {
+// @access private
+messageRouter.delete("/:messageId", auth, async (req, res) => {
   try {
     await Message.deleteOne({ _id: req.params.messageId });
     res.status(200).json({ msg: `Message was deleted successfully` });

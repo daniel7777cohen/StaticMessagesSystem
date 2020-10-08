@@ -1,10 +1,8 @@
 import {
   GET_MESSAGES,
   DELETE_MESSAGE,
-  SET_RECENET_SENDER,
-  DELETE_RECENT_SENDER,
   GET_MESSAGES_BY_USER_ID,
-  MESSAGE_ERROR
+  MESSAGE_ERROR,
 } from "../constants";
 import axios from "axios";
 import { setAlert } from "./alert";
@@ -21,7 +19,7 @@ export const addNewMessage = (messageInfo) => async (dispatch) => {
     if (res.status === 200) dispatch(setAlert(res.data.msg, "success"));
     return true;
   } catch (error) {
-    const errors = error.response.data.errors;
+    const { errors } = error.response.data;
     if (errors) {
       errors.forEach((e) => {
         dispatch(setAlert(e.msg, "danger"));
@@ -40,7 +38,7 @@ export const getMessages = () => async (dispatch) => {
         payload: res.data,
       });
   } catch (error) {
-    const errors = error.response.data.errors;
+    const { errors } = error.response.data;
     if (errors) {
       errors.forEach((e) => {
         dispatch(setAlert(e.msg, "danger"));
@@ -59,12 +57,13 @@ export const getMessagesByUserId = (userId) => async (dispatch) => {
       });
       const { received, sent } = res.data;
       if (received.length > 0 || sent.length > 0)
+        //else a nicer message is displayed for user
         dispatch(setAlert("Messages were loaded successfully", "success"));
     }
   } catch (error) {
     dispatch({
-      type:MESSAGE_ERROR,
-    })
+      type: MESSAGE_ERROR,
+    });
     const { errors } = error.response.data;
     if (errors) {
       errors.forEach((e) => {
@@ -87,24 +86,11 @@ export const deleteMessage = (messageId, type) => async (dispatch) => {
       });
     }
   } catch (error) {
-    const errors = error.response.data.errors;
+    const {errors} = error.response.data;
     if (errors) {
       errors.forEach((e) => {
         dispatch(setAlert(e.msg, "danger"));
       });
     }
   }
-};
-
-export const setRecentSender = (senderId) => (dispatch) => {
-  dispatch({
-    type: SET_RECENET_SENDER,
-    payload: senderId,
-  });
-};
-
-export const deleteRecentSender = () => (dispatch) => {
-  dispatch({
-    type: DELETE_RECENT_SENDER,
-  });
 };

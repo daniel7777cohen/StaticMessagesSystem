@@ -1,4 +1,4 @@
-import { SET_USERS } from "../constants";
+import { SET_USERS, CLEAR_USERS } from "../constants";
 
 const initialState = {
   usersList: [],
@@ -10,11 +10,14 @@ export default function (state = initialState, action) {
   switch (type) {
     case SET_USERS:
       return {
-        ...state,
         usersList: payload,
         loading: false,
       };
-
+    case CLEAR_USERS:
+      return {
+        usersList: [],
+        loading: true,
+      };
     default:
       return state;
   }

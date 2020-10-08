@@ -1,7 +1,7 @@
 import { setAlert } from "../store/actions/alert";
 import store from "../store/store";
 
-export const runClientValidations = ({ senderId, receiverId, subject, message }) => {
+export const createFormValidations = ({ senderId, receiverId, subject, message }) => {
   switch (true) {
     case !senderId:
       store.dispatch(
@@ -34,3 +34,18 @@ export const runClientValidations = ({ senderId, receiverId, subject, message })
   }
   return true;
 };
+
+export const loginFormValidations = ({email,password})=>{
+  switch(true){
+    case(!email):{
+      store.dispatch(setAlert("email is required", "danger"));
+      return false;
+    }
+    case(!password):{
+      store.dispatch(setAlert("password is required", "danger"));
+      return false;
+    }
+    default:
+  }
+  return true;
+}

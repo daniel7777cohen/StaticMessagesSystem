@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   PrimaryText,
   Container,
@@ -8,35 +8,29 @@ import {
   FormContainer,
   Button,
   Smiley,
+  ButtonsContainer,
 } from "../styled-components/styles";
 import { connect } from "react-redux";
 import MessagesTabs from "../components/message/MessagesTabs";
-import {
-  deleteRecentSender,
-  getMessagesByUserId,
-} from "../store/actions/message";
+import { getMessagesByUserId } from "../store/actions/message";
 import Spinner from "../components/layout/Spinner";
-import { withRouter, useLocation } from "react-router-dom";
 import { setAlert } from "../store/actions/alert";
 import { Result } from "antd";
 
 const MessagesManager = ({
-  deleteRecentSender,
   setAlert,
   getMessagesByUserId,
   message: { loading },
 }) => {
-  const { state } = useLocation();
-  useEffect(() => {
-    deleteRecentSender();
-  }, [setAlert, deleteRecentSender]);
-  const [userId, setUserId] = useState(state ? state.id : "");
+  const [userId, setUserId] = useState("");
+  const [isLoadClicked, setIsLoadClicked] = useState(false);
 
-  const handleLoadMessages = async (e) => {
+  const handleLoad = async (e) => {
     e.preventDefault();
     if (!userId) setAlert("User id field cannot be blank", "danger");
     else {
       await getMessagesByUserId(userId);
+      setIsLoadClicked(false);
     }
   };
 
@@ -44,6 +38,7 @@ const MessagesManager = ({
     <>
       <Container>
         <PrimaryText>Messages Manager</PrimaryText>
+        {isLoadClicked && <Spinner />}
         <FormContainer>
           <FormDesc isDisplayPage>User Id</FormDesc>
 
@@ -57,25 +52,30 @@ const MessagesManager = ({
               onChange={(e) => setUserId(e.target.value)}
             />
           </FormGroup>
-          <Button
-            style={{ marginRight: "1rem" }}
-            onClick={(e) => {
-              handleLoadMessages(e);
-            }}
-          >
-            Load
-          </Button>
-          <Button onClick={() => setUserId("")}>Reset</Button>
+          <ButtonsContainer>
+            <Button
+              style={{ marginRight: "1rem" }}
+              onClick={(e) => {
+                setIsLoadClicked(true);
+                handleLoad(e);
+              }}
+            >
+              Load
+            </Button>
+            <Button onClick={() => setUserId("")}>Reset</Button>
+          </ButtonsContainer>
         </FormContainer>
 
-        {!loading ? <MessagesTabs userId={userId} />: (
-        <Result
-          icon={<Smiley />}
-          title={
-            "Please fill in a valid user id , and press the Load button to view your mesages"
-          }
-        />
-      )}
+        {!loading ? (
+          <MessagesTabs />
+        ) : (
+          <Result
+            icon={<Smiley />}
+            title={
+              "Please fill in a valid user id , and press the Load button to view your mesages"
+            }
+          />
+        )}
       </Container>
     </>
   );
@@ -86,7 +86,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  deleteRecentSender,
   getMessagesByUserId,
   setAlert,
-})(withRouter(MessagesManager));
+})(MessagesManager);

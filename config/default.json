@@ -1,3 +1,8 @@
 {
-  "mongoURI": "mongodb+srv://danielcohen:a636pzw4@cluster0.1imot.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://danielcohen:a636pzw4@cluster0.1imot.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "youShellNotPass"
 }
+
+// {//bibi
+//   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY3ZGMwZTk5ZjNiZjBkNzE4YTFlMmFkIn0sImlhdCI6MTYwMjA3OTA1MiwiZXhwIjoxNjAyNDM5MDUyfQ.Qn2rApXEy0ioxGsnx8rMq-wR8RdcURvU4l_PlX0EcZk"
+// }

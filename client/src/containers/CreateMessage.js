@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
 import { connect } from "react-redux";
-import { removeAlerts } from "../store/actions/alert";
 import {
   Container,
   PrimaryText,
@@ -11,25 +10,15 @@ import {
   TextArea,
   Input,
   Button,
-  Link,
   GuideText,
 } from "../styled-components/styles";
 import Spinner from "../components/layout/Spinner";
-import { addNewMessage, setRecentSender } from "../store/actions/message";
-import { runClientValidations } from "./helper";
+import { addNewMessage } from "../store/actions/message";
+import { createFormValidations } from "./helper";
 
-const CreateMessage = ({
-  removeAlerts,
-  loading,
-  addNewMessage,
-  setRecentSender,
-  recentSenderId,
-}) => {
+const CreateMessage = ({ loading, addNewMessage }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    return () => {
-      // removeAlerts();
-    };
   }, []);
 
   const [formData, setFormData] = useState({
@@ -39,7 +28,7 @@ const CreateMessage = ({
     message: "",
   });
 
-  const { senderId, message } = formData;
+  const { message } = formData;
 
   const messageTextFormFields = [
     {
@@ -64,13 +53,11 @@ const CreateMessage = ({
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // removeAlerts();
-    const isClienValidation = runClientValidations(formData);
+    const isFormValid = createFormValidations(formData);
     window.scrollTo(0, 0);
-    if (isClienValidation) {
+    if (isFormValid) {
       const isAddSuccess = await addNewMessage(formData);
       if (isAddSuccess) {
-        setRecentSender(senderId);
         setFormData({ senderId: "", receiverId: "", subject: "", message: "" });
       }
     }
@@ -91,10 +78,10 @@ const CreateMessage = ({
             <GuideText>* Use the users icon and pick a valid id.</GuideText>
           </SecondaryText>
           <form>
-            {messageTextFormFields.map((formField) => {
+            {messageTextFormFields.map((formField, index) => {
               const { type, name, placeholder, field, label } = formField;
               return (
-                <>
+                <Fragment key={index}>
                   <FormDesc>{label}</FormDesc>
                   <FormGroup>
                     <Input
@@ -105,7 +92,7 @@ const CreateMessage = ({
                       value={formData[field]}
                     />
                   </FormGroup>
-                </>
+                </Fragment>
               );
             })}
             <FormDesc>Message</FormDesc>
@@ -117,19 +104,9 @@ const CreateMessage = ({
                 onChange={(e) => onChange(e)}
               ></TextArea>
             </FormGroup>
-            <Button type="submit" onClick={(e) => onSubmit(e)}>
+            <Button onClick={(e) => onSubmit(e)}>
               Submit
             </Button>
-            {recentSenderId && (
-              <Link
-                to={{
-                  pathname: "/view-messages",
-                  state: { id: recentSenderId },
-                }}
-              >
-                View Your Messages
-              </Link>
-            )}
           </form>
         </Container>
       ) : (
@@ -140,11 +117,8 @@ const CreateMessage = ({
 };
 const mapStateToProps = (state) => ({
   loading: state.users.loading,
-  recentSenderId: state.message.recentSenderId,
 });
 
 export default connect(mapStateToProps, {
-  removeAlerts,
   addNewMessage,
-  setRecentSender,
 })(CreateMessage);

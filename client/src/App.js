@@ -9,13 +9,22 @@ import store from "./store/store";
 import Alert from "./components/layout/Alert";
 import "antd/dist/antd.css";
 import { AppContainer } from "./styled-components/styles";
-import { getUsers } from "./store/actions/users";
+import { loadAllUsers } from "./store/actions/users";
 import Landing from "./components/layout/Landing";
+import Login from "./containers/Login";
+import setAuthToken from "./utils/setAuthToken";
+import { loadUser } from "./store/actions/auth";
+import PrivateRoute from "./auth/PrivateRoute";
 
+const token = localStorage.token;
+if (token) {
+  setAuthToken(token);
+}
 
 const App = () => {
   useEffect(() => {
-    store.dispatch(getUsers());
+    store.dispatch(loadAllUsers());
+    store.dispatch(loadUser());
   }, []);
 
   return (
@@ -27,8 +36,14 @@ const App = () => {
           <AppContainer className="container">
             <Alert />
             <Switch>
-              <Route exact path="/create-message" component={CreateMessage} />
-              <Route exact path="/view-messages" component={MessagesManager} />
+              <PrivateRoute
+                exact
+                path="/view-messages"
+                comp={MessagesManager}
+              />
+              <PrivateRoute exact path="/create-message" comp={CreateMessage} />
+
+              <Route exact path="/login" component={Login} />
             </Switch>
           </AppContainer>
         </>

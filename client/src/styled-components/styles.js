@@ -9,18 +9,21 @@ export const Container = styled.div`
 `;
 export const Input = styled.input`
   display: block;
-  width: 100%;
   padding: 0.4rem;
   font-size: 1rem;
   font-weight: 300;
   border: 1px solid #ccc;
-  border-radius: ${({ isDisplayPage }) => (isDisplayPage ? "25px" : "0")};
-
+  border-radius: 25px;
+  width:30%;
   @media (max-width: 480px) {
     text-align: ${({ isDisplayPage }) => (isDisplayPage ? "center" : "left")};
+    width: 100%;
+
   }
   @media (max-width: 768px) {
     text-align: ${({ isDisplayPage }) => (isDisplayPage ? "center" : "left")};
+    width: 100%;
+
   }
 `;
 
@@ -31,6 +34,7 @@ export const TextArea = styled.textarea`
   font-size: 1rem;
   font-weight: 300;
   border: 1px solid #ccc;
+  border-radius: 25px;
 `;
 
 export const FormGroup = styled.div`
@@ -88,8 +92,23 @@ export const Button = styled.button`
   outline: none;
   margin: 0.5rem 0;
   background-color: #1890ff;
+  width: 92px;
+  height: 37px;
+  border-radius: 25px;
+ 
 `;
 
+export const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 480px) {
+    justify-content: space-around;
+  }
+  @media (max-width: 768px) {
+    justify-content: space-around;
+    ;
+  }
+`;
 export const Link = styled(Link_)`
   font: inherit;
   background: #f4f4f4;
@@ -185,6 +204,12 @@ export const P = styled.p`
 
 export const NavSpan = styled.span`
   font-weight: bold;
+  @media (max-width: 480px) {
+    font-size:11px;
+  }
+  @media (max-width: 768px) {
+    font-size:11px;
+  }
 `;
 
 export const AppContainer = styled.section`
@@ -197,13 +222,13 @@ export const NavUl = styled.ul`
   display: flex;
   list-style: none;
   margin-top: 0.5rem;
+  margin-left: auto;
 `;
 
 export const Nav = styled.nav`
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0.7rem 2rem;
+  padding: 1rem;
   position: fixed;
   z-index: 1;
   width: 100%;
@@ -211,6 +236,7 @@ export const Nav = styled.nav`
   border-bottom: solid 1px;
   opacity: 0.9;
   background-color: black;
+  flex-direction: row;
 
   a {
     color: #fff;
@@ -221,9 +247,7 @@ export const Nav = styled.nav`
     }
   }
 
-  h1 {
-    margin-bottom: 1rem;
-  }
+ 
 `;
 
 export const CardBody = styled.div`
