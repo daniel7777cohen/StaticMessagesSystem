@@ -3,6 +3,7 @@ import {
   DELETE_MESSAGE,
   GET_MESSAGES_BY_USER_ID,
   MESSAGE_ERROR,
+  CLEAR_MESSAGES,
 } from "../constants";
 import axios from "axios";
 import { setAlert } from "./alert";
@@ -86,11 +87,17 @@ export const deleteMessage = (messageId, type) => async (dispatch) => {
       });
     }
   } catch (error) {
-    const {errors} = error.response.data;
+    const { errors } = error.response.data;
     if (errors) {
       errors.forEach((e) => {
         dispatch(setAlert(e.msg, "danger"));
       });
     }
   }
+};
+
+export const clearMessages = () => (dispatch) => {
+  dispatch({
+    type: CLEAR_MESSAGES,
+  });
 };

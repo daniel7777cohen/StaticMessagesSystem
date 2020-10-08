@@ -42,7 +42,7 @@ const Login = ({ login, isAuthenticated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isFormValid = loginFormValidations(formData);
-    if (isFormValid) login(email, password);
+    if (isFormValid) login(email.trim(), password.trim());
   };
 
   const { email, password } = formData;

@@ -12,7 +12,7 @@ import {
 } from "../styled-components/styles";
 import { connect } from "react-redux";
 import MessagesTabs from "../components/message/MessagesTabs";
-import { getMessagesByUserId } from "../store/actions/message";
+import { getMessagesByUserId, clearMessages } from "../store/actions/message";
 import Spinner from "../components/layout/Spinner";
 import { setAlert } from "../store/actions/alert";
 import { Result } from "antd";
@@ -20,16 +20,17 @@ import { Result } from "antd";
 const MessagesManager = ({
   setAlert,
   getMessagesByUserId,
+  clearMessages,
   message: { loading },
 }) => {
   const [userId, setUserId] = useState("");
   const [isLoadClicked, setIsLoadClicked] = useState(false);
-
+  debugger;
   useEffect(() => {
     return () => {
-      setUserId("");
+      clearMessages();
     };
-  },[]);
+  }, []);
 
   const handleLoad = async (e) => {
     e.preventDefault();
@@ -94,4 +95,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getMessagesByUserId,
   setAlert,
+  clearMessages,
 })(MessagesManager);
