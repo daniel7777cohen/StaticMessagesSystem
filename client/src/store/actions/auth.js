@@ -16,15 +16,15 @@ export const loadUser = () => async (dispatch) => {
   const token = localStorage.token;
   if (token) {
     setAuthToken(token);
-  }
-  try {
-    const res = await axios.get("/api/auth");
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data.user, //user
-    });
-  } catch (e) {
-    dispatch({ type: AUTH_ERROR });
+    try {
+      const res = await axios.get("/api/auth");
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data.user, //user
+      });
+    } catch (e) {
+      dispatch({ type: AUTH_ERROR });
+    }
   }
 };
 
@@ -50,7 +50,7 @@ export const login = (email, password) => async (dispatch) => {
       dispatch(loadAllUsers());
     }
   } catch (error) {
-    const {errors} = error.response.data;
+    const { errors } = error.response.data;
     if (errors) {
       errors.forEach((e) => {
         dispatch(setAlert(e.msg, "danger"));

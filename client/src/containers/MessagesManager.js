@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   PrimaryText,
   Container,
@@ -24,6 +24,12 @@ const MessagesManager = ({
 }) => {
   const [userId, setUserId] = useState("");
   const [isLoadClicked, setIsLoadClicked] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      setUserId("");
+    };
+  },[]);
 
   const handleLoad = async (e) => {
     e.preventDefault();
