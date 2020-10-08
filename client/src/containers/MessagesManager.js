@@ -30,7 +30,7 @@ const MessagesManager = ({
     return () => {
       clearMessages();
     };
-  }, []);
+  }, [clearMessages]);
 
   const handleLoad = async (e) => {
     e.preventDefault();
